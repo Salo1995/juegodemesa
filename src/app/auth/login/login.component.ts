@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // Redirigir si el usuario ya está autenticado
     if (localStorage.getItem('userId')) {
-      this.router.navigate(['/libros']);
+      this.router.navigate(['/juegos']);
     }
 
     // Inicialización del formulario de inicio de sesión
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
             // Guardar ID del usuario en localStorage y redirigir
             localStorage.setItem('userId', user.id!.toString());
             alert('Inicio de sesión exitoso');
-            this.router.navigate(['/libros']);
+            this.router.navigate(['/juegos']);
           } else {
             alert('Credenciales incorrectas');
           }
