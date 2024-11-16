@@ -1,29 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LibroService, Libro } from '../../services/juego.service';
+import { JuegoService, Juego } from '../../services/juego.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'app-libro-form',
+    selector: 'app-juego-form',
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule],
-    templateUrl: './libro-form.component.html',
-    styleUrls: ['./libro-form.component.css']
+    templateUrl: './juego-form.component.html',
+    styleUrls: ['./juego-form.component.css']
 })
-export class LibroFormComponent implements OnInit {
-    libroForm: FormGroup;
-    libroId: string | null = null;
+export class JuegoFormComponent implements OnInit {
+    juegoForm: FormGroup;
+    juegoId: string | null = null;
     isEditMode = false; // Variable para verificar si estamos en modo edición
     errorMessage: string | null = null;
 
     constructor(
         private fb: FormBuilder,
-        private libroService: LibroService,
+        private juegoService: JuegoService,
         private route: ActivatedRoute,
         private router: Router
     ) {
-        this.libroForm = this.fb.group({
+        this.juegoForm = this.fb.group({
             titulo: ['', Validators.required],
             autor: ['', Validators.required],
             añoPublicacion: ['', [Validators.required, Validators.min(1000), Validators.max(9999)]],
@@ -33,48 +33,48 @@ export class LibroFormComponent implements OnInit {
 
     ngOnInit(): void {
         // Verificar si estamos en modo edición
-        this.libroId = this.route.snapshot.paramMap.get('id');
-        this.isEditMode = !!this.libroId;
+        this.juegoId = this.route.snapshot.paramMap.get('id');
+        this.isEditMode = !!this.juegoId;
 
         if (this.isEditMode) {
-            // Cargar datos del libro para edición
-            this.libroService.getLibro(this.libroId!).subscribe({
-                next: (libro) => this.libroForm.patchValue(libro),
+            // Cargar datos del juego para edición
+            this.juegoService.getJuego(this.juegoId!).subscribe({
+                next: (juego) => this.juegoForm.patchValue(juego),
                 error: (err) => {
-                    console.error('Error al cargar libro para edición:', err);
-                    this.errorMessage = 'Error al cargar el libro. Intente nuevamente.';
+                    console.error('Error al cargar juego para edición:', err);
+                    this.errorMessage = 'Error al cargar el juego. Intente nuevamente.';
                 }
             });
         }
     }
 
     onSubmit(): void {
-        if (this.libroForm.valid) {
-            const libro: Libro = this.libroForm.value;
+        if (this.juegoForm.valid) {
+            const juego: Juego = this.juegoForm.value;
             this.errorMessage = null; // Limpiar mensaje de error
 
             if (this.isEditMode) {
                 // Modo edición
-                this.libroService.updateLibro(this.libroId!, libro).subscribe({
+                this.juegoService.updateJuego(this.juegoId!, juego).subscribe({
                     next: () => {
-                        alert('Libro actualizado con éxito');
-                        this.router.navigate(['/libros']);
+                        alert('Juego actualizado con éxito');
+                        this.router.navigate(['/juegos']);
                     },
                     error: (err) => {
-                        console.error('Error al actualizar el libro:', err);
-                        this.errorMessage = 'No se pudo actualizar el libro. Intente nuevamente.';
+                        console.error('Error al actualizar el juego:', err);
+                        this.errorMessage = 'No se pudo actualizar el juego. Intente nuevamente.';
                     }
                 });
             } else {
                 // Modo agregar
-                this.libroService.addLibro(libro).subscribe({
+                this.juegoService.addJuego(juego).subscribe({
                     next: () => {
-                        alert('Libro agregado con éxito');
-                        this.router.navigate(['/libros']);
+                        alert('Juego agregado con éxito');
+                        this.router.navigate(['/juegos']);
                     },
                     error: (err) => {
-                        console.error('Error al agregar el libro:', err);
-                        this.errorMessage = 'No se pudo agregar el libro. Intente nuevamente.';
+                        console.error('Error al agregar el juego:', err);
+                        this.errorMessage = 'No se pudo agregar el juego. Intente nuevamente.';
                     }
                 });
             }
@@ -83,11 +83,11 @@ export class LibroFormComponent implements OnInit {
         }
     }
     cancelar(): void {
-        this.router.navigate(['/libros']); // Redirige a la lista de libros
+        this.router.navigate(['/juegos']); // Redirige a la lista de juegos
     }
     // Método para mostrar los mensajes de error
     getErrorMessage(controlName: string): string {
-        const control = this.libroForm.get(controlName);
+        const control = this.juegoForm.get(controlName);
         if (control?.hasError('required')) {
             return 'Este campo es requerido';
         }

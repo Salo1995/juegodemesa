@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface Libro {
+export interface Juego {
     id: string;
     titulo: string;
     autor: string;
@@ -13,28 +13,28 @@ export interface Libro {
 @Injectable({
     providedIn: 'root'
 })
-export class LibroService {
-    private apiUrl = 'http://localhost:3000/libros';
+export class JuegoService {
+    private apiUrl = 'http://localhost:3000/juego';
 
     constructor(private http: HttpClient) {}
 
-    getLibros(): Observable<Libro[]> {
-        return this.http.get<Libro[]>(this.apiUrl);
+    getJuegos(): Observable<Juego[]> {
+        return this.http.get<Juego[]>(this.apiUrl);
     }
 
-    getLibro(id: string): Observable<Libro> {
-        return this.http.get<Libro>(`${this.apiUrl}/${id}`);
+    getJuego(id: string): Observable<Juego> {
+        return this.http.get<Juego>(`${this.apiUrl}/${id}`);
     }
 
-    addLibro(libro: Libro): Observable<Libro> {
-        return this.http.post<Libro>(this.apiUrl, libro);
+    addJuego(juego: Juego): Observable<Juego> {
+        return this.http.post<Juego>(this.apiUrl, juego);
     }
 
-    updateLibro(id: string, libro: Libro): Observable<Libro> {
-        return this.http.put<Libro>(`${this.apiUrl}/${id}`, libro);
+    updateJuego(id: string, juego: Juego): Observable<Juego> {
+        return this.http.put<Juego>(`${this.apiUrl}/${id}`, juego);
     }
 
-    deleteLibro(id: string): Observable<void> {
+    deleteJuego(id: string): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
 }
