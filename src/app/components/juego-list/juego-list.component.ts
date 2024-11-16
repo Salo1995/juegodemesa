@@ -1,64 +1,63 @@
 import { Component, OnInit } from '@angular/core';
-import { LibroService, Libro } from '../../services/libro.service';
+import { JuegoService, Juego } from '../../services/juego.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-libros-list',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './libros-list.component.html',
-    styleUrls: ['./libros-list.component.css']
+  selector: 'app-juegos-list',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './juegos-list.component.html',
+  styleUrls: ['./juegos-list.component.css'],
 })
-export class LibrosListComponent implements OnInit {
-    libros: Libro[] = [];
+export class JuegoListComponent implements OnInit {
+  juegos: Juego[] = []; // Lista de juegos
 
-    constructor(
-        private libroService: LibroService,
-        private authService: AuthService,  // Inyecta AuthService aquí
-        private router: Router
-    ) {}
+  constructor(
+    private juegoService: JuegoService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-    ngOnInit(): void {
-        this.cargarLibros();
+  ngOnInit(): void {
+    this.cargarJuegos();
+  }
+
+  cargarJuegos(): void {
+    this.juegoService.getJuegos().subscribe({
+      next: (data) => {
+        this.juegos = data; // Corrige el nombre de la propiedad a "juegos"
+        console.log('Datos cargados en juego-list:', data);
+      },
+      error: (err) => {
+        console.error('Error al cargar juegos:', err);
+      },
+    });
+  }
+
+  editarJuego(id: string): void {
+    this.router.navigate(['/juego/editar', id]);
+  }
+
+  eliminarJuego(id: string): void {
+    if (confirm('¿Estás seguro de que quieres eliminar este juego?')) {
+      this.juegoService.deleteJuego(id).subscribe({
+        next: () => {
+          alert('Juego eliminado con éxito');
+          this.juegos = this.juegos.filter((juego) => juego.id !== id); // Actualiza la lista local
+        },
+        error: (err) => console.error('Error al eliminar el juego:', err),
+      });
     }
+  }
 
-    cargarLibros(): void {
-        this.libroService.getLibros().subscribe({
-            next: (data) => {
-                this.libros = data;
-                console.log("Datos cargados en libros-list:", data);
-            },
-            error: (err) => {
-                console.error("Error al cargar libros:", err);
-            }
-        });
-    }
+  agregarNuevoJuego(): void {
+    this.router.navigate(['/juego/nuevo']);
+  }
 
-    editarLibro(id: string): void {
-        this.router.navigate(['/libros/editar', id]);
-    }
-
-    eliminarLibro(id: string): void {
-        if (confirm('¿Estás seguro de que quieres eliminar este libro?')) {
-            this.libroService.deleteLibro(id).subscribe({
-                next: () => {
-                    alert('Libro eliminado con éxito');
-                    this.libros = this.libros.filter(libro => libro.id !== id);
-                },
-                error: (err) => console.error('Error al eliminar el libro:', err)
-            });
-        }
-    }
-
-    agregarNuevoLibro(): void {
-        this.router.navigate(['/libros/nuevo']);
-    }
-
-    // Método para cerrar sesión
-    logout(): void {
-        this.authService.logout(); // Llama al método logout del servicio de autenticación
-        this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
-    }
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }
