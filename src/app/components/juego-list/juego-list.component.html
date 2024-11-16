@@ -1,0 +1,29 @@
+<div class="container">
+    <header class="text-center my-4">
+      <h2>Gestión de Biblioteca</h2>
+      <p class="text-muted">Administra tus libros de forma sencilla</p>
+    </header>
+  
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary" (click)="agregarNuevoLibro()">Agregar Nuevo Libro</button>
+    </div>
+  
+    <div class="card">
+      <div class="card-header">
+        <h3 class="h5">Lista de Libros</h3>
+        <button (click)="logout()" class="btn btn-secondary">Cerrar sesión</button>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let libro of libros" class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ libro.titulo }}</strong> - {{ libro.autor }}
+          </div>
+          <div>
+            <button class="btn btn-sm btn-secondary mx-1" (click)="editarLibro(libro.id)">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="eliminarLibro(libro.id)">Eliminar</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
