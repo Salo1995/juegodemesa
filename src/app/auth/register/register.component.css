@@ -1,4 +1,4 @@
-/* General styling for full-page centering */
+/* General */
 .register-container {
   max-width: 400px;
   margin: 0 auto;
@@ -8,26 +8,25 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #f8f9fa; /* Fondo claro */
   position: absolute; /* Posición absoluta para centrar */
-  top: 50%; /* Posición vertical al 50% */
-  left: 50%; /* Posición horizontal al 50% */
-  transform: translate(-50%, -50%); /* Ajuste exacto al centro */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
 }
 
-/* Text alignment for the title */
 h2 {
-  color: #007bff; /* Azul */
+  color: #007bff;
   margin-bottom: 20px;
   text-align: center;
 }
 
-/* Form groups spacing */
+
 .form-group {
   margin-bottom: 20px;
 }
 
-/* Button styles */
+
 .btn-primary {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745; 
   border: none;
   width: 100%;
   padding: 10px;
@@ -38,7 +37,7 @@ h2 {
 }
 
 .btn-primary:hover {
-  background-color: #218838; /* Verde oscuro */
+  background-color: #218838; 
   cursor: pointer;
 }
 

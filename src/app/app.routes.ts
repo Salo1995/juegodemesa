@@ -9,5 +9,5 @@ export const routes: Routes = [
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/register', component: RegisterComponent },
   { path: 'juegos/editar/:id', component: JuegoEditComponent },
-  { path: 'inicio', component: InicioComponent }, // Ruta de inicio para usuarios estándar
+  { path: 'inicio', component: InicioComponent }, 
 ];

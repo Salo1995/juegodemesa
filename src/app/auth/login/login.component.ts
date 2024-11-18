@@ -27,13 +27,13 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
-      // Simula autenticación para diferentes usuarios
+     
       if (email === 'admin@example.com' && password === 'admin123') {
         alert('Inicio de sesión exitoso como Administrador');
-        this.router.navigate(['/juegos/editar/1']); // Redirige a la página de edición
+        this.router.navigate(['/juegos/editar/1']); 
       } else if (email === 'user@example.com' && password === 'user123') {
         alert('Inicio de sesión exitoso como Usuario');
-        this.router.navigate(['/inicio']); // Redirige a la página de inicio
+        this.router.navigate(['/inicio']); 
       } else {
         alert('Credenciales incorrectas');
       }
