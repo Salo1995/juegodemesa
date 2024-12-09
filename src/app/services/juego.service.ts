@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Juego {
-  id: string;
+  id: number;
   titulo: string;
   autor: string;
   anioPublicacion: number; // Cambia "añoPublicacion" por "anioPublicacion"
@@ -15,7 +15,7 @@ export interface Juego {
   providedIn: 'root',
 })
 export class JuegoService {
-  private apiUrl = 'http://localhost:3000/juego';
+  private apiUrl = 'http://localhost:4020/api/juego';
 
   constructor(private http: HttpClient) {}
 
@@ -23,7 +23,7 @@ export class JuegoService {
     return this.http.get<Juego[]>(this.apiUrl);
   }
 
-  getJuego(id: string): Observable<Juego> {
+  getJuegoById(id: number): Observable<Juego> {
     return this.http.get<Juego>(`${this.apiUrl}/${id}`);
   }
 

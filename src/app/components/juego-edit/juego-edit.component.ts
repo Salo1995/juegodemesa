@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { JuegoService, Juego } from '../../services/juego.service'; // Importa el servicio
 
 @Component({
   selector: 'app-juego-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule ],
   templateUrl: './juego-edit.component.html',
   styleUrls: ['./juego-edit.component.css'],
 })
@@ -17,15 +17,20 @@ export class JuegoEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private juegoService: JuegoService // Inyecta el servicio
   ) {}
 
   ngOnInit(): void {
+    // Inicializa el formulario
     this.juegoForm = this.fb.group({
       titulo: ['', Validators.required],
       autor: ['', Validators.required],
-      anioPublicacion: ['', [Validators.required, Validators.min(1000), Validators.max(9999)]],
-      genero: ['', Validators.required],
+      anioPublicacion: [
+        '',
+        [Validators.required, Validators.min(1000), Validators.max(9999)],
+      ],
+      categoria: ['', Validators.required],
     });
 
     // Cargar datos del juego si es necesario
@@ -36,9 +41,15 @@ export class JuegoEditComponent implements OnInit {
   }
 
   cargarJuego(id: string): void {
-    // Lógica para cargar los datos del juego (simulada aquí)
-    // Puedes hacer una llamada al servicio para obtener el juego por ID
-    console.log(`Cargando datos del juego con ID: ${id}`);
+    this.juegoService.getJuegoById(Number(id)).subscribe({
+      next: (juego: Juego) => {
+        this.juegoForm.patchValue(juego); // Carga los datos del juego en el formulario
+      },
+      error: (err) => {
+        this.errorMessage = 'Error al cargar los datos del juego.';
+        console.error(err);
+      },
+    });
   }
 
   onSubmit(): void {
@@ -53,7 +64,6 @@ export class JuegoEditComponent implements OnInit {
   }
 
   cancelar(): void {
-    // Redirige al usuario a la lista de juegos o al inicio
-    this.router.navigate(['/juegos']);
+    this.router.navigate(['/juegos']); // Redirige al usuario a la lista de juegos o al inicio
   }
 }

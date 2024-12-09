@@ -15,7 +15,7 @@ interface User {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'http://localhost:8080/users';
 
   constructor(private http: HttpClient, private router: Router) {} // Asegúrate de que Router esté inyectado aquí
 
