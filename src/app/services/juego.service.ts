@@ -6,7 +6,7 @@ export interface Juego {
   id: number;
   titulo: string;
   autor: string;
-  anioPublicacion: number; // Cambia "añoPublicacion" por "anioPublicacion"
+  anioPublicacion: number; 
   genero: string;
 }
 
@@ -31,11 +31,12 @@ export class JuegoService {
     return this.http.post<Juego>(this.apiUrl, juego);
   }
 
-  updateJuego(id: string, juego: Juego): Observable<Juego> {
+  updateJuego(id: string | number, juego: Juego): Observable<Juego> {
     return this.http.put<Juego>(`${this.apiUrl}/${id}`, juego);
-  }
+  }  
 
   deleteJuego(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
+ 

@@ -1,0 +1,57 @@
+<div class="container">
+    <h2>Registrar Nuevo Juego</h2>
+  
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Formulario -->
+    <form [formGroup]="juegoForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input
+          id="titulo"
+          formControlName="titulo"
+          type="text"
+          class="form-control"
+          placeholder="Ingrese el título del juego"
+        />
+      </div>
+      <div class="form-group">
+        <label for="autor">Autor</label>
+        <input
+          id="autor"
+          formControlName="autor"
+          type="text"
+          class="form-control"
+          placeholder="Ingrese el autor del juego"
+        />
+      </div>
+      <div class="form-group">
+        <label for="anioPublicacion">Año de Publicación</label>
+        <input
+          id="anioPublicacion"
+          formControlName="anioPublicacion"
+          type="number"
+          class="form-control"
+          placeholder="Ingrese el año de publicación"
+        />
+      </div>
+      <div class="form-group">
+        <label for="categoria">Categoría</label>
+        <input
+          id="categoria"
+          formControlName="categoria"
+          type="text"
+          class="form-control"
+          placeholder="Ingrese la categoría del juego"
+        />
+      </div>
+      <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Registrar Juego</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  
